@@ -29,63 +29,72 @@ permalink: '/'
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
-
+        
+        <div class='row' style='margin-left: -200px; margin-right: -200px;'>
         {{ content }}
 
         <!-- Home Post List -->
-        
+        <main class="grid">
         {% for post in site.posts reversed %}
           {% if post.tags contains 'home' %}
-            <article class="post-preview">
-              <a href="{{ post.url | prepend: site.baseurl | replace: '//', '/' }}">
-                <h2 class="post-title">{% if post.home_title %}{{ post.home_title }}{% else %}{{ post.title }}{% endif %}</h2>
-                {% if post.subtitle or post.home_subtitle %}
-                <h3 class="post-subtitle">{% if post.home_subtitle %}{{ post.home_subtitle }}{% else %}{{ post.subtitle }}{% endif %}</h3>
+              
+
+          <div class="card">
+            <img class="card-img-top" src="{{ post.bg_url }}">
+            
+            <div class="card-body">
+                <a href="{{ post.url | prepend: site.baseurl | replace: '//', '/' }}">
+                <h2 class="post-title">{{ post.title }}</h2>
+                {% if post.subtitle %}
+                <h3 class="post-subtitle">{{ post.subtitle }}</h3>
                 {% else %}
                 <h3 class="post-subtitle">{{ post.excerpt | strip_html | truncatewords: 15 }}</h3>
                 {% endif %}
-              </a>
-
-              {% if post.author %}
-                {% assign authors = post.author %}
-              {% else %}
-                {% assign authors = site.author %}
-              {% endif %}
-
-              <p class="meta">Posted by
-                {% if authors.first %}
-                  {% for author in authors %}
-                    {% if site.data.authors[author] %}
-                      <a target="_blank" href="https://github.com/{{ author }}">{{ site.data.authors[author].name }}</a>{% unless forloop.last %},{% endunless %}
-                    {% else %}
-                      {% if post.author_github_id[forloop.index0] and post.author_github_id[forloop.index0] != "" %}
-                        <a target="_blank" href="https://github.com/{{ post.author_github_id[forloop.index0] }}">{{ author }}</a>{% unless forloop.last %},{% endunless %}
-                      {% else %}
-                        {{ author }}{% unless forloop.last %},{% endunless %}
-                      {% endif %}
-                    {% endif %}
-                  {% endfor %}
+                </a>
+        
+                {% if post.author %}
+                    {% assign authors = post.author %}
                 {% else %}
-                  {% if site.data.authors[post.author] %}
-                    <a target="_blank" href="https://github.com/{{ post.author }}">{{ site.data.authors[post.author].name }}</a>
-                  {% elsif post.author and post.author_github_id and post.author_github_id != "" %}
-                    <a target="_blank" href="https://github.com/{{ post.author_github_id }}">{{ authors }}</a>
-                  {% else %}
-                    {{ authors }}
-                  {% endif %}
+                    {% assign authors = site.author %}
                 {% endif %}
-                on {{ post.date | date: '%B %d, %Y' }} &middot; {% include read_time.html content=post.content %}            
-              </p>
-            </article>
-            <hr>
-            {% endif %}
-        {% endfor %}
+        
+                <p class="meta">Posted by
+                {% if authors.first %}
+                    {% for author in authors %}
+                    {% if site.data.authors[author] %}
+                        <a target="_blank" href="https://github.com/{{ author }}">{{ site.data.authors[author].name }}</a>{% unless forloop.last %},{% endunless %}
+                    {% else %}
+                        {% if post.author_github_id[forloop.index0] and post.author_github_id[forloop.index0] != "" %}
+                        <a target="_blank" href="https://github.com/{{ post.author_github_id[forloop.index0] }}">{{ author }}</a>{% unless forloop.last %},{% endunless %}
+                        {% else %}
+                        {{ author }}{% unless forloop.last %},{% endunless %}
+                        {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                {% else %}
+                    {% if site.data.authors[post.author] %}
+                    <a target="_blank" href="https://github.com/{{ post.author }}">{{ site.data.authors[post.author].name }}</a>
+                    {% elsif post.author and post.author_github_id and post.author_github_id != "" %}
+                    <a target="_blank" href="https://github.com/{{ post.author_github_id }}">{{ authors }}</a>
+                    {% else %}
+                    {{ authors }}
+                    {% endif %}
+                {% endif %}
+                on {{ post.date | date: '%B %d, %Y' }} &middot; {% include read_time.html content=post.content %} &middot;
+                <a href="{{ post.url | prepend: site.baseurl | replace: '//', '/' }}#disqus_thread"></a>
+                </p>
+            </div>
+          </div>
 
+
+          {% endif %}
+        {% endfor %}
+        </main>
         <!-- Pager -->
         <div class="clearfix">
           <a class="btn btn-primary float-right" href="{{"/posts" | relative_url }}">View All Posts &rarr;</a>
         </div>
-
+        </div>
       </div>
     </div>
   </div>

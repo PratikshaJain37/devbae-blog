@@ -1,0 +1,21 @@
+
+/* Arranging grid */
+.grid { 
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 20px;
+  align-items: stretch;
+}
+
+/* Style the counter cards */
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  text-align: center;
+  background-color: #f1f1f1;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+  background-color: #DCD5D0;
+}
